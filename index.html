@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Crochet Guide - Textured Mug Cozy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f4f0 0%, #e8ddd4 100%);
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 12px;
+            color: #8b7355;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #8b7355;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6b5b47;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        
+        .progress-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #d4af37;
+        }
+        
+        .progress-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .progress-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #8b7355;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+        
+        .progress-text {
+            font-weight: 500;
+            color: #6b5b47;
+        }
+        
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid #d4af37;
+        }
+        
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: #8b7355;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .steps-container {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .step {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step.completed {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b7355, #6b5b47);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .step.completed .step-number {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+        }
+        
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #8b7355;
+            flex: 1;
+        }
+        
+        .step-content {
+            margin-bottom: 20px;
+        }
+        
+        .step-description {
+            font-size: 1rem;
+            color: #4a4a4a;
+            margin-bottom: 15px;
+        }
+        
+        .step-details {
+            background: #f8f6f3;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #d4af37;
+            margin: 15px 0;
+        }
+        
+        .complete-btn {
+            background: linear-gradient(135deg, #8b7355, #6b5b47);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .complete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .complete-btn.completed {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            cursor: default;
+        }
+        
+        .pro-tip {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #2c2c2c;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .pro-tip::before {
+            content: "💡 PRO TIP";
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .troubleshooting {
+            background: #fff5f5;
+            border: 2px solid #fecaca;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .troubleshooting h4 {
+            color: #dc2626;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .troubleshooting ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .troubleshooting li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .troubleshooting li::before {
+            content: "🔧";
+            position: absolute;
+            left: 0;
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            border: 3px solid #d4af37;
+        }
+        
+        .celebration.show {
+            display: block;
+            animation: celebrationPop 0.5s ease;
+        }
+        
+        @keyframes celebrationPop {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        .celebration h2 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .celebration p {
+            color: #6b5b47;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .close-celebration {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .overlay.show {
+            display: block;
+        }
+        
+        .visual-guide {
+            background: #f8f6f3;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #d4af37;
+        }
+        
+        .visual-guide h4 {
+            font-family: 'Playfair Display', serif;
+            color: #8b7355;
+            margin-bottom: 15px;
+        }
+        
+        .stitch-demo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .stitch-icon {
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .step {
+                padding: 20px;
+            }
+            
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="watermark">Cold Collectibles</div>
+        
+        <div class="header">
+            <h1 class="title">Interactive Crochet Guide</h1>
+            <p class="subtitle">Master the Art of Creating a Textured Mug Cozy</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-header">
+                <h2 class="progress-title">Your Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">0 of 7 steps completed</p>
+            </div>
+        </div>
+        
+        <div class="project-info">
+            <div class="info-card">
+                <h3>Project Details</h3>
+                <p><strong>Skill Level:</strong> Beginner</p>
+                <p><strong>Construction:</strong> A stretchy ribbed rectangle worked flat in rows; button loop forms closure</p>
+                <p><strong>Finished Size:</strong> ~2.5–3 in (6–7.5 cm) tall × 9–11 in (23–28 cm) long, adjustable to mug</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>Materials Needed</h3>
+                <p><strong>Yarn:</strong> Worsted weight yarn (approx. 50-75 yards)</p>
+                <p><strong>Hook:</strong> Size H/8 (5.0mm) crochet hook</p>
+                <p><strong>Notions:</strong> Yarn needle, scissors, 1 button</p>
+                <p><strong>Gauge:</strong> ~8–9 hdc sts × 6–7 rows ≈ 2 in × 2 in in BLO (flexible)</p>
+            </div>
+        </div>
+        
+        <div class="visual-guide">
+            <h4>🧶 Visualizing Stitch Anatomy (Quick Guide)</h4>
+            <div class="stitch-demo">
+                <span class="stitch-icon">🔍</span>
+                <div>
+                    <strong>Top of each stitch shows a "V".</strong> BLO means insert hook under the back bar of the V (farther from you). Edges stay straight when you always work the first and last stitch—count them each row.
+                </div>
+            </div>
+        </div>
+        
+        <div class="steps-container">
+            <div class="step" data-step="1">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Foundation Chain</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Start your mug cozy by creating the foundation chain that determines the height.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> Chain 9 (for ~2.5 in height). For taller cozy, chain 11.
+                    </div>
+                    <div class="pro-tip">
+                        Keep your foundation chain loose and even. This will make it easier to work into for your first row!
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(1)">Mark as Complete</button>
+            </div>
+            
+            <div class="step" data-step="2">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">First Row</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Work your first row of half double crochet stitches across the foundation chain.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> Half double crochet (hdc) in 2nd chain from hook and in each chain across. (8 or 10 stitches total)
+                    </div>
+                    <div class="pro-tip">
+                        Remember to skip the first chain (closest to your hook) and start in the second chain. Count your stitches to ensure you have the right number!
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(2)">Mark as Complete</button>
+            </div>
+            
+            <div class="step" data-step="3">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Second Row (BLO Pattern)</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Begin the textured pattern by working in back loops only.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> Chain 1, turn. Half double crochet in back loop only (BLO) across. (maintain 8 or 10 stitches)
+                    </div>
+                    <div class="pro-tip">
+                        Working in back loops only creates the ribbed texture! Insert your hook under only the back bar of each "V" at the top of the stitches.
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(3)">Mark as Complete</button>
+            </div>
+            
+            <div class="step" data-step="4">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Repeat Rows</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Continue the ribbed pattern until your cozy is long enough to wrap around your mug.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> Repeat Row 2 (ch 1, turn, hdc in BLO across) until length wraps the mug with slight tension (about 9–11 inches).
+                    </div>
+                    <div class="pro-tip">
+                        Test fit your cozy around your mug as you go! You want it snug but not too tight. The ribbed texture will provide stretch.
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(4)">Mark as Complete</button>
+            </div>
+            
+            <div class="step" data-step="5">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Button Loop</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Create the button loop closure for your mug cozy.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> At end of last row, chain 8 (or to fit button), slip stitch to last stitch to form a loop. Fasten off, leaving 8–10 inch tail.
+                    </div>
+                    <div class="pro-tip">
+                        Test your button through the loop before fastening off. Adjust the chain count if needed - you want it snug but not too tight!
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(5)">Mark as Complete</button>
+            </div>
+            
+            <div class="step" data-step="6">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <h3 class="step-title">Finishing Touches</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Weave in ends and attach the button to complete your cozy.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> Using yarn needle, weave ends neatly. Sew button centered on opposite short edge. Try on mug and adjust.
+                    </div>
+                    <div class="pro-tip">
+                        Position the button so it aligns perfectly with your loop when the cozy is wrapped around your mug. This ensures a secure fit!
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(6)">Mark as Complete</button>
+            </div>
+            
+            <div class="step" data-step="7">
+                <div class="step-header">
+                    <div class="step-number">7</div>
+                    <h3 class="step-title">Optional Edging</h3>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Add a polished finish with an optional single crochet border.</p>
+                    <div class="step-details">
+                        <strong>Instructions:</strong> Work 1 round of single crochet around entire rectangle for a framed look (place 1 sc per row end; 3 sc in each corner).
+                    </div>
+                    <div class="pro-tip">
+                        This edging step gives your cozy a professional, finished appearance and helps prevent curling at the edges!
+                    </div>
+                </div>
+                <button class="complete-btn" onclick="completeStep(7)">Mark as Complete</button>
+            </div>
+        </div>
+        
+        <div class="troubleshooting">
+            <h4>🔧 Troubleshooting Common Issues</h4>
+            <ul>
+                <li><strong>Edges are slanting:</strong> You may be skipping the first or last stitch. Count stitches each row (8 or 10).</li>
+                <li><strong>Too tight:</strong> Loosen grip; try a 5.5 mm hook for easier motion.</li>
+                <li><strong>Too loose/holes:</strong> Pull a little more yarn control; try a 4.5 mm hook.</li>
+                <li><strong>Loop too small/large:</strong> Adjust chain count for the button loop to fit snugly.</li>
+                <li><strong>Uneven height:</strong> Recount foundation chain; add/remove one chain to dial height.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="celebration" id="celebration">
+        <h2>🎉 Congratulations!</h2>
+        <p>You've completed your textured mug cozy! Your crochet skills are growing beautifully.</p>
+        <button class="close-celebration" onclick="closeCelebration()">Continue Learning</button>
+    </div>
+    
+    <script>
+        let completedSteps = new Set();
+        const totalSteps = 7;
+        
+        function completeStep(stepNumber) {
+            if (completedSteps.has(stepNumber)) return;
+            
+            completedSteps.add(stepNumber);
+            
+            // Update step appearance
+            const step = document.querySelector(`[data-step="${stepNumber}"]`);
+            step.classList.add('completed');
+            
+            const button = step.querySelector('.complete-btn');
+            button.textContent = '✓ Completed';
+            button.classList.add('completed');
+            
+            // Update progress
+            updateProgress();
+            
+            // Check if all steps completed
+            if (completedSteps.size === totalSteps) {
+                setTimeout(showCelebration, 500);
+            }
+        }
+        
+        function updateProgress() {
+            const progress = (completedSteps.size / totalSteps) * 100;
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `${completedSteps.size} of ${totalSteps} steps completed`;
+        }
+        
+        function showCelebration() {
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('celebration').classList.add('show');
+        }
+        
+        function closeCelebration() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('celebration').classList.remove('show');
+        }
+        
+        // Close celebration when clicking overlay
+        document.getElementById('overlay').addEventListener('click', closeCelebration);
+        
+        // Initialize progress
+        updateProgress();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e407d1f1d0bcce',t:'MTc1NzcyODYxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
